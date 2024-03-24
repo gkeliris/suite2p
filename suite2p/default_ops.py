@@ -129,6 +129,7 @@ def default_ops():
         "anatomical_only":
             0,  # run cellpose to get masks on 1: max_proj / mean_img; 2: mean_img; 3: mean_img enhanced, 4: max_proj
         "diameter": 0,  # use diameter for cellpose, if 0 estimate diameter
+        "diameters": 0, # GAK added this for multi-plane experiments with different aspect ratios
         "cellprob_threshold": 0.0,  # cellprob_threshold for cellpose
         "flow_threshold": 1.5,  # flow_threshold for cellpose
         "spatial_hp_cp": 0,  # high-pass image spatially by a multiple of the diameter

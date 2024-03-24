@@ -358,6 +358,8 @@ def init_ops(ops):
     if "dy" in ops and ops["dy"] != "":
         dy = ops["dy"]
         dx = ops["dx"]
+    if "diameters" in ops:                      #GAK
+        diameters = ops["diameters"]            #GAK
     # compile ops into list across planes
     for j in range(0, nplanes):
         if len(ops["save_folder"]) > 0:
@@ -384,6 +386,8 @@ def init_ops(ops):
         if "dy" in ops and ops["dy"] != "":
             ops["dy"] = dy[j]
             ops["dx"] = dx[j]
+        if "diameters" in ops:                                  #GAK
+            ops["diameter"] = diameters[2*j:2*(j+1)]            #GAK
         if not os.path.isdir(fast_disk):
             os.makedirs(fast_disk)
         if not os.path.isdir(ops["save_path"]):
