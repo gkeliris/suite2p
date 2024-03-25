@@ -66,6 +66,29 @@ def compute_dydx(ops1):
         for j in range(len(ops1)):
             dx[j] = (j % nX) * Lx
             dy[j] = int(j / nX) * Ly
+    elif ("nroisPerPlane" in ops): #GAK
+        dx=np.array(ops['dx'])
+        dy=np.array(ops['dy'])
+        Lx = np.array([o['Lx'] for o in ops1])
+        Ly = np.array([o['Ly'] for o in ops1])
+        dxLx = dx + Lx
+        dyLy = dy + Ly
+        iplanes=np.array(ops['iplane'])
+        nplanes=len(ops['nroisPerPlane'])
+        maxdx=np.zeros(nplanes); maxdy=np.zeros(nplanes) 
+        for p in range(nplanes):
+            maxdx[p]=dxLx[iplanes==p].max()
+            maxdy[p]=dyLy[iplanes==p].max()
+        DX = maxdx.max()        
+        DY = maxdy.max()
+        sqDim = np.int16(np.ceil(np.sqrt(nplanes)))
+        p=0
+        while p<nplanes:
+            for iy in range(sqDim):
+                for ix in range(sqDim):
+                    dx[iplanes==p]=dx[iplanes==p]+ix*DX
+                    dy[iplanes==p]=dy[iplanes==p]+iy*DY
+                    p+=1
     else:
         dx = np.array([o["dx"] for o in ops1])
         dy = np.array([o["dy"] for o in ops1])

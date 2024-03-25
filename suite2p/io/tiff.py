@@ -277,25 +277,34 @@ def mesoscan_to_binary(ops):
             ops["nplanes"] = len(opsj)
         ops["lines"] = opsj["lines"]
     else:
-        ops["nrois"] = len(ops["lines"])
-    nplanes = ops["nplanes"]
+        if "nrois" not in ops:  #GAK
+            ops["nrois"] = len(ops["lines"])
+    if "iplane" in ops: #GAK
+        nplanes = len(set(ops['iplane'])) #GAK
+    else:
+        nplanes = ops["nplanes"]
 
     print("NOTE: nplanes %d nrois %d => ops['nplanes'] = %d" %
           (nplanes, ops["nrois"], ops["nrois"] * nplanes))
-    # multiply lines across planes
-    lines = ops["lines"].copy()
-    dy = ops["dy"].copy()
-    dx = ops["dx"].copy()
-    ops["lines"] = [None] * nplanes * ops["nrois"]
-    ops["dy"] = [None] * nplanes * ops["nrois"]
-    ops["dx"] = [None] * nplanes * ops["nrois"]
-    ops["iplane"] = np.zeros((nplanes * ops["nrois"],), np.int32)
-    for n in range(ops["nrois"]):
-        ops["lines"][n::ops["nrois"]] = [lines[n]] * nplanes
-        ops["dy"][n::ops["nrois"]] = [dy[n]] * nplanes
-        ops["dx"][n::ops["nrois"]] = [dx[n]] * nplanes
-        ops["iplane"][n::ops["nrois"]] = np.arange(0, nplanes, 1, int)
-    ops["nplanes"] = nplanes * ops["nrois"]
+    
+    if 'nroisPerPlane' not in ops: #GAK
+        # multiply lines across planes 
+        lines = ops["lines"].copy()
+        dy = ops["dy"].copy()
+        dx = ops["dx"].copy()
+        ops["lines"] = [None] * nplanes * ops["nrois"]
+        ops["dy"] = [None] * nplanes * ops["nrois"]
+        ops["dx"] = [None] * nplanes * ops["nrois"]
+        ops["iplane"] = np.zeros((nplanes * ops["nrois"],), np.int32)
+        for n in range(ops["nrois"]):
+            ops["lines"][n::ops["nrois"]] = [lines[n]] * nplanes
+            ops["dy"][n::ops["nrois"]] = [dy[n]] * nplanes
+            ops["dx"][n::ops["nrois"]] = [dx[n]] * nplanes
+            ops["iplane"][n::ops["nrois"]] = np.arange(0, nplanes, 1, int)
+        ops["nplanes"] = nplanes * ops["nrois"]
+    else:   # GAK
+        # info already in ops   #GAK
+        ops['nplanes'] = len(ops['dx']) #GAK
     ops1 = utils.init_ops(ops)
 
     # this shouldn"t make it here
