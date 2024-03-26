@@ -4,6 +4,7 @@ Copyright © 2023 Howard Hughes Medical Institute, Authored by Carsen Stringer a
 from .version import version
 from .default_ops import default_ops
 from .run_s2p import run_s2p, run_plane, pipeline
+from .run_s2p_toBinary import run_s2p_toBinary, run_planes #GAK
 from .detection import ROI, detection_wrapper
 from .classification import classify
 from .extraction import extraction_wrapper
