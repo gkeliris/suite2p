@@ -67,8 +67,8 @@ def compute_dydx(ops1):
             dx[j] = (j % nX) * Lx
             dy[j] = int(j / nX) * Ly
     elif ("nroisPerPlane" in ops): #GAK
-        dx=np.array(ops['dx'])
-        dy=np.array(ops['dy'])
+        dx = np.array([o['dx'] for o in ops1])
+        dy = np.array([o['dy'] for o in ops1])
         Lx = np.array([o['Lx'] for o in ops1])
         Ly = np.array([o['Ly'] for o in ops1])
         dxLx = dx + Lx
