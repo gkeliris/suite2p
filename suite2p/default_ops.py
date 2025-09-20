@@ -131,10 +131,10 @@ def default_ops():
         "diameter": 0,  # use diameter for cellpose, if 0 estimate diameter
         "diameters": 0, # GAK added this for multi-plane experiments with different aspect ratios
         "cellprob_threshold": 0.0,  # cellprob_threshold for cellpose
-        "flow_threshold": 1.5,  # flow_threshold for cellpose
+        "flow_threshold": 0.4,  # flow_threshold for cellpose
         "spatial_hp_cp": 0,  # high-pass image spatially by a multiple of the diameter
         "pretrained_model":
-            "cyto",  # path to pretrained model or model type string in Cellpose (can be user model)
+            "cpsam",  # path to pretrained model or model type string in Cellpose (can be user model)
 
         # classification parameters
         "soma_crop":
